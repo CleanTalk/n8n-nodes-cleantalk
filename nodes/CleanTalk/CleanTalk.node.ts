@@ -34,7 +34,8 @@ export class CleanTalk implements INodeType {
 		icon: { light: 'file:../../icons/cleantalk.svg', dark: 'file:../../icons/cleantalk.dark.svg' },
 		group: ['transform'],
 		version: 1,
-		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
+		subtitle:
+			'={{ {"checkMessage": "Check Message", "checkRegistration": "Check Registration"}[$parameter["operation"]] }}',
 		description:
 			'Check form submissions, comments and registrations for spam with CleanTalk Anti-Spam',
 		defaults: {
