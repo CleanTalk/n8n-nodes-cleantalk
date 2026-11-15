@@ -1,0 +1,134 @@
+{
+  "name": "CleanTalk spam filter for a webhook form",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contact-form",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "resource": "submission",
+        "operation": "checkMessage",
+        "senderEmail": "={{ $json.body.email }}",
+        "message": "={{ $json.body.message }}",
+        "senderName": "={{ $json.body.name }}",
+        "senderIp": "={{ $json.headers['x-forwarded-for'] || $json.headers['x-real-ip'] || '' }}",
+        "additionalFields": {}
+      },
+      "name": "CleanTalk",
+      "type": "n8n-nodes-cleantalk.cleanTalk",
+      "typeVersion": 1,
+      "position": [240, 0],
+      "credentials": {
+        "cleanTalkApi": {
+          "id": "",
+          "name": "CleanTalk API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "is-spam",
+              "leftValue": "={{ $json.isSpam }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "name": "Is spam?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [480, 0]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "status",
+              "value": "blocked",
+              "type": "string"
+            },
+            {
+              "id": "a2",
+              "name": "reason",
+              "value": "={{ $json.codes }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Spam: log and stop",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [720, -120]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b1",
+              "name": "status",
+              "value": "lead",
+              "type": "string"
+            },
+            {
+              "id": "b2",
+              "name": "email",
+              "value": "={{ $('Webhook').item.json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "b3",
+              "name": "message",
+              "value": "={{ $('Webhook').item.json.body.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Clean: send to CRM",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [720, 120]
+    }
+  ],
+  "connections": {
+    "Webhook": { "main": [[{ "node": "CleanTalk", "type": "main", "index": 0 }]] },
+    "CleanTalk": { "main": [[{ "node": "Is spam?", "type": "main", "index": 0 }]] },
+    "Is spam?": {
+      "main": [
+        [{ "node": "Spam: log and stop", "type": "main", "index": 0 }],
+        [{ "node": "Clean: send to CRM", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "settings": { "executionOrder": "v1" }
+}
