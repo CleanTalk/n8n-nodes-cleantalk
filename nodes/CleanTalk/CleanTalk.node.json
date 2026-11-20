@@ -1,35 +1,35 @@
 {
-	"node": "n8n-nodes-cleantalk",
-	"nodeVersion": "1.0",
-	"codexVersion": "1.0",
-	"categories": [
-		"Marketing & Content",
-		"Utility"
-	],
-	"alias": [
-		"spam",
-		"anti-spam",
-		"antispam",
-		"spam filter",
-		"spam protection",
-		"captcha",
-		"captcha alternative",
-		"lead validation",
-		"form spam",
-		"fake leads",
-		"bot detection",
-		"comment moderation"
-	],
-	"resources": {
-		"credentialDocumentation": [
-			{
-				"url": "https://github.com/CleanTalk/n8n-nodes-cleantalk?tab=readme-ov-file#credentials"
-			}
-		],
-		"primaryDocumentation": [
-			{
-				"url": "https://github.com/CleanTalk/n8n-nodes-cleantalk?tab=readme-ov-file"
-			}
-		]
-	}
+  "node": "n8n-nodes-cleantalk.cleanTalk",
+  "nodeVersion": "1.0",
+  "codexVersion": "1.0",
+  "categories": [
+    "Marketing & Content",
+    "Utility"
+  ],
+  "alias": [
+    "spam",
+    "anti-spam",
+    "antispam",
+    "spam filter",
+    "spam protection",
+    "captcha",
+    "captcha alternative",
+    "lead validation",
+    "form spam",
+    "fake leads",
+    "bot detection",
+    "comment moderation"
+  ],
+  "resources": {
+    "credentialDocumentation": [
+      {
+        "url": "https://github.com/CleanTalk/n8n-nodes-cleantalk?tab=readme-ov-file#credentials"
+      }
+    ],
+    "primaryDocumentation": [
+      {
+        "url": "https://github.com/CleanTalk/n8n-nodes-cleantalk?tab=readme-ov-file"
+      }
+    ]
+  }
 }
