@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-cleantalk",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "n8n community node for CleanTalk Anti-Spam: check form submissions, comments and registrations for spam, and look up emails and IPs in the CleanTalk blacklist database",
 	"license": "MIT",
 	"homepage": "https://github.com/CleanTalk/n8n-nodes-cleantalk",
